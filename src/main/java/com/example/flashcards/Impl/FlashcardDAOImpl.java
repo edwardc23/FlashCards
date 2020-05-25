@@ -1,21 +1,23 @@
-package Impl;
+package com.example.flashcards.Impl;
 
-import Entity.Cards;
-import Entity.Login;
+import com.example.flashcards.Entity.Cards;
+import com.example.flashcards.Entity.Login;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+@Repository
 public class FlashcardDAOImpl implements FlashcardDAO {
     private EntityManager manager;
     private Session sesh;
     private Random rand;
+
     @Autowired
     public FlashcardDAOImpl(EntityManager manager){this.manager=manager;}
 
@@ -58,8 +60,13 @@ public class FlashcardDAOImpl implements FlashcardDAO {
         sesh= manager.unwrap(Session.class);
         sesh.saveOrUpdate(card);
     }
-
-
+    @Transactional
+    @Override
+    public void updateCard(Cards card)
+    {
+        sesh = manager.unwrap(Session.class);
+        sesh.update(card);
+    }
 
     @Override
     public void deleteById(int theId) {

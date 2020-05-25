@@ -1,6 +1,6 @@
-package Impl;
+package com.example.flashcards.Impl;
 
-import Entity.Login;
+import com.example.flashcards.Entity.Login;
 
 public interface LoginDAO {
 

@@ -1,32 +1,28 @@
-package Controllers;
+package com.example.flashcards.Controllers;
 
-import Entity.Login;
-import Impl.LoginDAO;
+import com.example.flashcards.Entity.Login;
+import com.example.flashcards.Impl.LoginDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
+
 public class LoginController {
-
-
     private final LoginDAO loginDAO;
-
+    @Autowired
     public LoginController(LoginDAO loginDAO)
     {
         this.loginDAO = loginDAO;
     }
 
-    @GetMapping("/getAdmin/{adminID}")
-    public Login getAdmin(@PathVariable int adminId){
-        Login item = loginDAO.getAdmin(adminId);
-        if(item == null){
-            throw new RuntimeException("Couldn't find an item in inventory with ID:" + adminId);
-        }
-        return item;
+    @GetMapping("/ddd")
+    public String test()
+    {
+        return "test";
     }
-
-    @PostMapping("/createAdmin")
-    public Login createAdmin(@PathVariable Login admin){
+    @PostMapping("/addAdmin")
+    public Login createAdmin(@RequestBody Login admin){
         Login item = loginDAO.saveAdmin(admin);
         return item;
     }

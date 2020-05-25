@@ -1,15 +1,15 @@
-package Entity;
+package com.example.flashcards.Entity;
 
 import javax.persistence.*;
 
 
 @Entity
-@Table(name="Flashcards")
+@Table(name="admininfo")
 public class Login {
 
     @Id //This will map the primary key.
     @GeneratedValue(strategy = GenerationType.IDENTITY) //This will auto increment your primary key
-    @Column(name = "id") //This is mapping the primary key to the id column in the table.
+    @Column(name = "ID") //This is mapping the primary key to the id column in the table.
     private int id;
 
     @Column(name="Username")
