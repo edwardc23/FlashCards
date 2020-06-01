@@ -17,7 +17,7 @@ public class FlashcardDAOImpl implements FlashcardDAO {
     private EntityManager manager;
     private Session sesh;
     private Random rand;
-
+    private ArrayList<Integer> indx= new ArrayList<Integer>();
     @Autowired
     public FlashcardDAOImpl(EntityManager manager){this.manager=manager;}
 
@@ -25,7 +25,7 @@ public class FlashcardDAOImpl implements FlashcardDAO {
     @Transactional
     public List<Cards> listInventory() {
         sesh = manager.unwrap(Session.class);
-        Query<Cards> listQuery = sesh.createQuery("from Parts");
+        Query<Cards> listQuery = sesh.createQuery("from Cards");
         return listQuery.getResultList();
     }
     @Transactional
@@ -53,7 +53,24 @@ public class FlashcardDAOImpl implements FlashcardDAO {
         Cards card =sesh.get(Cards.class, id );
         return card ;
     }
-
+    public boolean checkCards(int id,int size)
+    {
+        if(indx.size()!=size){
+        if(!indx.contains(id)) {
+            indx.add(id);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        }
+        else{
+            indx.clear();
+            indx.add(id);
+            return true;
+        }
+    }
     @Transactional
     @Override
     public void createCard(Cards card) {
@@ -71,7 +88,9 @@ public class FlashcardDAOImpl implements FlashcardDAO {
     @Override
     public void deleteById(int theId) {
         sesh= manager.unwrap(Session.class);
+        sesh.beginTransaction();
         Cards card = sesh.get(Cards.class, theId);
         sesh.delete(card);
+        sesh.getTransaction().commit();
     }
 }

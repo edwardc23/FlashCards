@@ -12,7 +12,7 @@ public interface FlashcardDAO {
     void saveAdmin(Login admin);
     Cards getRandomCard();
     void createCard(Cards card);
-
+    boolean checkCards(int id, int size);
     @Transactional
     void updateCard(Cards card);
 

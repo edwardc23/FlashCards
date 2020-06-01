@@ -30,15 +30,9 @@ public class LoginDAOImpl implements  LoginDAO{
     }
 
     public List<Login> listInventory() {
-        SessionFactory factory = new Configuration().configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Login.class)
-                .buildSessionFactory();
-
-        Session session = factory.getCurrentSession();
-        session.beginTransaction();
+        Session session = manager.unwrap(Session.class);
         List info= session.createQuery("from Login").list();
         session.close();
-        factory.close();
         return  info;
     }
 

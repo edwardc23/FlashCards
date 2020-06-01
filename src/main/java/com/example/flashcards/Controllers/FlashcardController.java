@@ -5,6 +5,7 @@ import com.example.flashcards.Impl.FlashcardDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -33,7 +34,18 @@ public class FlashcardController {
 
             return item;
         }
-//
+        @GetMapping("/randomCard")
+        public Cards randomCard()
+        {
+            List<Cards> a= flashcardDao.listInventory();
+
+            int x= (int)(Math.random()*a.size());
+            while(!flashcardDao.checkCards(x,a.size()))
+            {
+                x= (int)(Math.random()*a.size());
+            }
+            return a.get(x);
+        }
 //
         //updates item by ID
         @PutMapping("/update")
@@ -44,7 +56,7 @@ public class FlashcardController {
 
         //adds and stores a new item
         @PostMapping("/addCard")
-        public Cards addItem(@RequestBody Cards card){
+        public Cards addCard(@RequestBody Cards card){
             card.setId(0);
             flashcardDao.createCard(card);
 
